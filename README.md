@@ -1,6 +1,6 @@
 # Landmark Forge
 
-Massives Blender-4.x-Python-Skript, das vier ikonische Bauwerke als **prozedurale 3D-Modelle** erzeugt:
+Massives Blender-4.x/5.x-Python-Skript, das vier ikonische Bauwerke als **prozedurale 3D-Modelle** erzeugt:
 
 1. **Hogwarts Castle** — Fan-Interpretation einer gotischen Schloss-Schule (nicht mit Warner Bros. oder J. K. Rowling verbunden)
 2. **ETH Zürich** — Hauptgebäude nach Gottfried Semper, Kuppel von Gustav Gull
@@ -11,11 +11,13 @@ Das gesamte Generator-Skript steckt in **einer Datei**: [`landmark_forge.py`](./
 
 Repository: [github.com/lolalpha00gamma/blender-landmarks](https://github.com/lolalpha00gamma/blender-landmarks)
 
+**v1.0.1** — läuft auf Blender 5.0 (das alte Skript crasht dort mit `use_preview_alpha`). In Blender den Text-Block **ersetzen**, nicht denselben Run Script erneut.
+
 ---
 
 ## In Blender ausführen
 
-1. Blender **4.0+** öffnen (4.2 / 4.5 empfohlen).
+1. Blender **4.0+** öffnen (4.2 / 4.5 / 5.0 unterstützt).
 2. Workspace **Scripting**.
 3. `Open` → `landmark_forge.py`.
 4. **Run Script**.
@@ -63,6 +65,6 @@ Jedes Gebäude landet in einer eigenen Collection (`LF_Hogwarts`, `LF_ETH_Zurich
 
 - Hogwarts ist eine **eigenständige Fan-Interpretation** der öffentlich bekannten Massenverteilung einer schottischen Schloss-Schule. Kein Studio-Mesh, keine Marken-Assets.
 - ETH, MI6 und Oper sind **architektonische Annäherungen** (Massing, Material, Silhouette), keine Vermessungsmodelle.
-- Materialien nutzen Principled BSDF, kompatibel mit Blender 4.0 (Specular IOR Level / Transmission Weight) und älteren Socket-Namen.
+- Materialien nutzen Principled BSDF, kompatibel mit Blender 4.0–5.x (Specular IOR Level / Transmission Weight plus ältere Socket-Namen). Versionsspezifische Material-Flags (Alpha-Preview, Shadow Method) werden übersprungen, wenn die laufende Blender-Version sie nicht mehr kennt.
 
 MIT-Lizenz. Siehe [`LICENSE`](./LICENSE).

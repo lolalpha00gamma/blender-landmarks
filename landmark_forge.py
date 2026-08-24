@@ -2,7 +2,7 @@
 """
 LANDMARK FORGE
 ==============
-Blender 4.x procedural architecture generator.
+Blender 4.x / 5.x procedural architecture generator.
 
 One-file script. Open in Blender → Scripting workspace → Run Script.
 Or from a terminal:
@@ -17,7 +17,7 @@ What it builds (four independent collections, optionally laid out as a museum):
   3. MI6 / SIS         — Vauxhall Cross, Terry Farrell 1994 (ziggurat)
   4. Sydney Opera House — Utzon spherical shells on Bennelong Point
 
-Blender 4.0 – 4.5+  |  Python 3.10+  |  Cycles or EEVEE
+Blender 4.0 – 5.x  |  Python 3.10+  |  Cycles or EEVEE
 
 N-Panel:  3D Viewport → Sidebar (N) → Landmark Forge
 """
@@ -44,7 +44,7 @@ except ImportError as exc:  # pragma: no cover
 # 0. VERSION / CONFIG
 # =============================================================================
 
-SCRIPT_VERSION = "1.0.0"
+SCRIPT_VERSION = "1.0.1"
 BLENDER_MIN = (4, 0, 0)
 
 Vec3 = Tuple[float, float, float]
@@ -659,6 +659,15 @@ def make_icosphere_chunk(
 # 3. MATERIAL LIBRARY
 # =============================================================================
 
+def _set_rna(id_data, name: str, value) -> None:
+    """Assign an RNA property only if this Blender version still has it."""
+    if hasattr(id_data, name):
+        try:
+            setattr(id_data, name, value)
+        except Exception:
+            pass
+
+
 def _hash_color(key: str) -> None:
     return None
 
@@ -713,13 +722,10 @@ def principled_material(
         bsdf.inputs["Subsurface Weight"].default_value = subsurface
     nt.links.new(bsdf.outputs["BSDF"], out.inputs["Surface"])
     if alpha < 0.999:
-        mat.blend_method = "BLEND"
-        try:
-            mat.shadow_method = "HASHED"
-        except Exception:
-            pass
-    if emission_strength > 0:
-        mat.use_preview_alpha = False
+        # Blend/shadow RNA names differ across 4.0, 4.2 (EEVEE Next) and 5.0.
+        _set_rna(mat, "blend_method", "BLEND")
+        _set_rna(mat, "shadow_method", "HASHED")
+        _set_rna(mat, "surface_render_method", "BLENDED")
     return mat
 
 
@@ -1494,7 +1500,10 @@ def setup_render() -> None:
         s.cycles.use_denoising = True
     except Exception:
         pass
-    s.eevee.taa_render_samples = 64
+    try:
+        s.eevee.taa_render_samples = 64
+    except Exception:
+        pass
     try:
         s.eevee.use_ssr = True
         s.eevee.use_gtao = True
