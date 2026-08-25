@@ -17,7 +17,7 @@ What it builds (four independent collections, optionally laid out as a museum):
   3. MI6 / SIS         — Vauxhall Cross, Terry Farrell 1994 (ziggurat)
   4. Sydney Opera House — Utzon spherical shells on Bennelong Point
 
-Blender 4.0 – 5.x  |  Python 3.10+  |  Cycles or EEVEE
+Blender 4.0 – 5.x  |  Python 3.10+  |  Cycles or EEVEE  |  v1.2.0
 
 N-Panel:  3D Viewport → Sidebar (N) → Landmark Forge
 """
@@ -44,7 +44,7 @@ except ImportError as exc:  # pragma: no cover
 # 0. VERSION / CONFIG
 # =============================================================================
 
-SCRIPT_VERSION = "1.0.1"
+SCRIPT_VERSION = "1.2.0"
 BLENDER_MIN = (4, 0, 0)
 
 Vec3 = Tuple[float, float, float]
@@ -765,7 +765,7 @@ class Materials:
         self.grass = principled_material("LF_Grass", (0.12, 0.22, 0.09), roughness=0.92)
         self.dark_grass = principled_material("LF_DarkGrass", (0.07, 0.14, 0.06), roughness=0.95)
         self.rock = principled_material("LF_Rock", (0.22, 0.20, 0.18), roughness=0.88)
-        self.cliff = principled_material("LF_Cliff", (0.28, 0.26, 0.24), roughness=0.9)
+        self.cliff = principled_material("LF_Cliff", (0.36, 0.34, 0.31), roughness=0.94)
         self.water = principled_material(
             "LF_Water",
             (0.05, 0.12, 0.16),
@@ -800,9 +800,10 @@ class Materials:
         self.cool_glow = emission_material("LF_CoolGlow", (0.55, 0.78, 1.0), 2.4 if night else 0.1)
 
         # Hogwarts
-        self.hog_stone = principled_material("LF_HogStone", (0.38, 0.35, 0.31), roughness=0.82)
-        self.hog_stone_dark = principled_material("LF_HogStoneDark", (0.24, 0.22, 0.20), roughness=0.86)
-        self.hog_slate = principled_material("LF_HogSlate", (0.16, 0.18, 0.22), roughness=0.55)
+        self.hog_stone = principled_material("LF_HogStone", (0.48, 0.46, 0.42), roughness=0.86)
+        self.hog_stone_dark = principled_material("LF_HogStoneDark", (0.30, 0.28, 0.25), roughness=0.9)
+        self.hog_slate = principled_material("LF_HogSlate", (0.10, 0.12, 0.16), roughness=0.5)
+        self.cliff = principled_material("LF_Cliff", (0.36, 0.34, 0.31), roughness=0.94)
         self.hog_slate_green = principled_material("LF_HogSlateGreen", (0.14, 0.18, 0.16), roughness=0.5)
         self.hog_mortar = principled_material("LF_HogMortar", (0.42, 0.40, 0.36), roughness=0.9)
         self.hog_glass = principled_material(
@@ -1732,7 +1733,7 @@ def _hog_great_hall(
     parent: bpy.types.Object,
 ) -> None:
     m = get_mats()
-    length, width, height = 42.0, 16.0, 14.0
+    length, width, height = 52.0, 16.0, 20.0
     # plinth
     make_box(
         "LF_Hog_GH_plinth",
@@ -1876,7 +1877,7 @@ def _hog_clock_tower(
     parent: bpy.types.Object,
 ) -> None:
     m = get_mats()
-    h = 38.0
+    h = 48.0
     r = 5.6
     make_cylinder("LF_Hog_Clock_shaft", r, h, (ox, oy, oz + h * 0.5), 28, collection, parent, m.hog_stone)
     make_cylinder("LF_Hog_Clock_belt", r + 0.25, 1.1, (ox, oy, oz + 22.0), 28, collection, parent, m.hog_stone_dark)
@@ -1932,7 +1933,7 @@ def _hog_astronomy(
     parent: bpy.types.Object,
 ) -> None:
     m = get_mats()
-    h = 52.0
+    h = 70.0
     fp = 7.5
     make_box("LF_Hog_Astro_body", (fp, fp, h), (ox, oy, oz + h * 0.5), collection, parent, m.hog_stone)
     make_box("LF_Hog_Astro_corbel", (fp + 1.1, fp + 1.1, 0.7), (ox, oy, oz + h - 0.2), collection, parent, m.hog_stone_dark)
@@ -2012,15 +2013,15 @@ def _hog_viaduct(
     parent: bpy.types.Object,
 ) -> None:
     m = get_mats()
-    length = 55.0
-    make_box("LF_Hog_Via_deck", (6.5, length, 1.1), (ox, oy, oz + 8.5), collection, parent, m.hog_stone)
-    crenellations("LF_Hog_Via_merlonL", (ox - 3.1, oy - length * 0.5, oz + 9.4), length, "Y", 18, collection, parent, m.hog_stone_dark, (0.4, 0.5, 0.7))
-    crenellations("LF_Hog_Via_merlonR", (ox + 3.1, oy - length * 0.5, oz + 9.4), length, "Y", 18, collection, parent, m.hog_stone_dark, (0.4, 0.5, 0.7))
-    arches = 6
+    length = 78.0
+    make_box("LF_Hog_Via_deck", (6.5, length, 1.1), (ox, oy, oz + 10.5), collection, parent, m.hog_stone)
+    crenellations("LF_Hog_Via_merlonL", (ox - 3.1, oy - length * 0.5, oz + 11.4), length, "Y", 22, collection, parent, m.hog_stone_dark, (0.4, 0.5, 0.7))
+    crenellations("LF_Hog_Via_merlonR", (ox + 3.1, oy - length * 0.5, oz + 11.4), length, "Y", 22, collection, parent, m.hog_stone_dark, (0.4, 0.5, 0.7))
+    arches = 10
     for i in range(arches):
         y = oy - length * 0.5 + (i + 0.5) * (length / arches)
-        make_box(f"LF_Hog_Via_pier_{i}", (5.2, 2.2, 8.2), (ox, y, oz + 4.1), collection, parent, m.hog_stone_dark)
-        make_arch_solid(f"LF_Hog_Via_arch_{i}", 7.5, 6.5, 5.0, 1.1, (ox, y + 4.2, oz), collection, parent, m.hog_stone)
+        make_box(f"LF_Hog_Via_pier_{i}", (5.2, 2.2, 10.2), (ox, y, oz + 5.1), collection, parent, m.hog_stone_dark)
+        make_arch_solid(f"LF_Hog_Via_arch_{i}", 7.5, 8.5, 5.0, 1.1, (ox, y + 3.6, oz), collection, parent, m.hog_stone)
 
 
 def _hog_wooden_bridge(
@@ -2127,14 +2128,14 @@ def build_hogwarts(origin: Vec3, collection: Optional[bpy.types.Collection] = No
     _hog_cloister(ox + 4.0, oy + 8.0, oz + 3.2, col, root)
     _hog_keep(ox + 2.0, oy + 22.0, oz + 3.2, col, root)
     _hog_astronomy(ox + 8.0, oy + 38.0, oz + 3.2, col, root)
-    _hog_round_tower("LF_Hog_Gryff", ox - 16.0, oy + 16.0, oz + 3.2, 4.8, 28.0, col, root, roof_height=9.0, floors=6)
-    _hog_round_tower("LF_Hog_Rav", ox - 24.0, oy + 6.0, oz + 3.2, 4.2, 24.0, col, root, roof_height=8.0, floors=5)
-    _hog_round_tower("LF_Hog_Huff", ox + 26.0, oy + 12.0, oz + 3.2, 4.4, 22.0, col, root, roof_height=7.5, floors=5)
-    _hog_round_tower("LF_Hog_Slyth", ox + 22.0, oy - 18.0, oz + 3.2, 3.8, 20.0, col, root, roof_height=7.0, floors=5)
-    _hog_square_tower("LF_Hog_BellL", ox - 8.0, oy - 22.0, oz + 3.2, 5.5, 26.0, col, root, roof_h=6.0)
-    _hog_square_tower("LF_Hog_BellR", ox + 16.0, oy - 22.0, oz + 3.2, 5.5, 26.0, col, root, roof_h=6.0)
+    _hog_round_tower("LF_Hog_Gryff", ox - 16.0, oy + 16.0, oz + 3.2, 4.8, 36.0, col, root, roof_height=12.0, floors=7)
+    _hog_round_tower("LF_Hog_Rav", ox - 24.0, oy + 6.0, oz + 3.2, 4.2, 32.0, col, root, roof_height=11.0, floors=6)
+    _hog_round_tower("LF_Hog_Huff", ox + 26.0, oy + 12.0, oz + 3.2, 4.4, 30.0, col, root, roof_height=10.0, floors=6)
+    _hog_round_tower("LF_Hog_Slyth", ox + 22.0, oy - 18.0, oz + 3.2, 3.8, 28.0, col, root, roof_height=9.5, floors=6)
+    _hog_square_tower("LF_Hog_BellL", ox - 8.0, oy - 22.0, oz + 3.2, 5.5, 34.0, col, root, roof_h=8.0)
+    _hog_square_tower("LF_Hog_BellR", ox + 16.0, oy - 22.0, oz + 3.2, 5.5, 34.0, col, root, roof_h=8.0)
     _hog_greenhouses(ox + 34.0, oy + 28.0, oz + 3.2, col, root)
-    _hog_viaduct(ox - 6.0, oy - 42.0, oz - 2.0, col, root)
+    _hog_viaduct(ox - 28.0, oy - 52.0, oz - 2.0, col, root)
     _hog_wooden_bridge(ox - 34.0, oy + 4.0, oz + 1.0, col, root)
     _hog_boathouse(ox + 18.0, oy - 38.0, oz - 0.2, col, root)
     # walls linking clusters
@@ -2150,12 +2151,14 @@ def build_hogwarts(origin: Vec3, collection: Optional[bpy.types.Collection] = No
         lamp_post(f"LF_Hog_Lamp_{i}", (ox - 8.5, oy - 60.0 + i * 8.0, oz + 7.4), col, root, height=3.6)
     add_camera(
         "LF_Hog_Cam",
-        (origin[0] - 70.0, origin[1] - 90.0, origin[2] + 38.0),
-        (origin[0] + 4.0, origin[1] + 8.0, origin[2] + 22.0),
+        (origin[0] + 18.0, origin[1] - 82.0, origin[2] + 22.0),
+        (origin[0] + 4.0, origin[1] + 8.0, origin[2] + 28.0),
         col,
-        lens=32.0,
+        lens=34.0,
     )
-    add_point("LF_Hog_Fill", (origin[0], origin[1] - 20.0, origin[2] + 30.0), 400.0, (1.0, 0.82, 0.55), col, root)
+    add_point("LF_Hog_Fill", (origin[0] + 6.0, origin[1] - 40.0, origin[2] + 18.0), 900.0, (1.0, 0.84, 0.55), col, root)
+    add_point("LF_Hog_WashL", (origin[0] - 12.0, origin[1] - 36.0, origin[2] + 10.0), 600.0, (1.0, 0.78, 0.42), col, root)
+    add_point("LF_Hog_WashR", (origin[0] + 22.0, origin[1] - 32.0, origin[2] + 12.0), 520.0, (1.0, 0.80, 0.48), col, root)
     print("LF: Hogwarts built")
     return root
 
@@ -2336,9 +2339,9 @@ def build_eth(origin: Vec3, collection: Optional[bpy.types.Collection] = None) -
     _eth_wing("LF_ETH_East", ox + 40.0, oy + 2.0, oz + 2.0, 16.0, 28.0, 4, col, root, "Y")
     _eth_courtyard("LF_ETH_CourtW", ox - 18.0, oy + 2.0, oz + 2.0, 22.0, 22.0, col, root)
     _eth_courtyard("LF_ETH_CourtE", ox + 18.0, oy + 2.0, oz + 2.0, 22.0, 22.0, col, root)
-    # dome sits on the east plaza (Rämistrasse)
-    _eth_dome(ox + 58.0, oy + 2.0, oz + 2.0, col, root)
-    make_cylinder("LF_ETH_DomePlaza", 22.0, 0.35, (ox + 58.0, oy + 2.0, oz + 2.15), 32, col, root, m.eth_plaza)
+    # dome sits in the north plaza (Rämistrasse) — the iconic courtyard view
+    _eth_dome(ox, oy + 52.0, oz + 2.0, col, root)
+    make_cylinder("LF_ETH_DomePlaza", 38.0, 0.35, (ox, oy + 68.0, oz + 2.15), 40, col, root, m.eth_plaza)
     hedge_box("LF_ETH_DomeHedge", (1.0, 28.0, 1.1), (ox + 42.0, oy + 2.0, oz + 2.8), col, root)
     # central connecting hall
     make_box("LF_ETH_Aula", (18.0, 14.0, 12.0), (ox, oy + 2.0, oz + 8.0), col, root, m.eth_sandstone)
@@ -2354,7 +2357,7 @@ def build_eth(origin: Vec3, collection: Optional[bpy.types.Collection] = None) -
         simple_tree(f"LF_ETH_Tree_{i}", (ox - 50 + i * 11.0, oy - 44.0, oz + 3.1), col, root, height=RNG.uniform(7.0, 11.0), conifer=False)
     for i in range(8):
         lamp_post(f"LF_ETH_Lamp_{i}", (ox - 40 + i * 12.0, oy - 36.0, oz + 3.1), col, root)
-    add_camera("LF_ETH_Cam", (origin[0] + 90.0, origin[1] - 70.0, origin[2] + 28.0), (origin[0] + 20.0, origin[1] + 2.0, origin[2] + 18.0), col, 32.0)
+    add_camera("LF_ETH_Cam", (origin[0] + 8.0, origin[1] + 95.0, origin[2] + 16.0), (origin[0], origin[1] + 40.0, origin[2] + 24.0), col, 32.0)
     print("LF: ETH Zürich built")
     return root
 
@@ -2434,11 +2437,11 @@ def build_mi6(origin: Vec3, collection: Optional[bpy.types.Collection] = None) -
     z_off = oz + 4.5
     for name, sx, sy, h, z0 in layers:
         _mi6_step_layer(f"LF_MI6_{name}", ox, oy + 1.5, z_off + z0, sx, sy, h, col, root, glass_inset=True)
-    # green glass shoulders (the "Lego" side blocks)
-    _mi6_glass_block("LF_MI6_ShoulderE", (10.0, 28.0, 22.0), (ox + 28.0, oy + 2.0, oz + 4.5 + 11.0), col, root, 2.2)
-    _mi6_glass_block("LF_MI6_ShoulderW", (10.0, 28.0, 22.0), (ox - 28.0, oy + 2.0, oz + 4.5 + 11.0), col, root, 2.2)
-    _mi6_glass_block("LF_MI6_CrownE", (14.0, 16.0, 8.0), (ox + 18.0, oy + 4.0, oz + 4.5 + 28.0), col, root, 2.0)
-    _mi6_glass_block("LF_MI6_CrownW", (14.0, 16.0, 8.0), (ox - 18.0, oy + 4.0, oz + 4.5 + 28.0), col, root, 2.0)
+    # green glass wings — behind and to the sides of the cream mass
+    _mi6_glass_block("LF_MI6_ShoulderE", (16.0, 28.0, 26.0), (ox + 34.0, oy + 8.0, oz + 4.5 + 13.0), col, root, 2.2)
+    _mi6_glass_block("LF_MI6_ShoulderW", (16.0, 28.0, 26.0), (ox - 34.0, oy + 8.0, oz + 4.5 + 13.0), col, root, 2.2)
+    _mi6_glass_block("LF_MI6_CrownE", (12.0, 20.0, 12.0), (ox + 28.0, oy + 10.0, oz + 4.5 + 28.0), col, root, 2.0)
+    _mi6_glass_block("LF_MI6_CrownW", (12.0, 20.0, 12.0), (ox - 28.0, oy + 10.0, oz + 4.5 + 28.0), col, root, 2.0)
     # central aedicule / temple front on the river elevation
     make_box("LF_MI6_Aedicule", (10.0, 6.0, 9.0), (ox, oy - 16.0, oz + 4.5 + 10.5), col, root, m.mi6_cream)
     for i, x in enumerate((-3.2, -1.05, 1.05, 3.2)):
@@ -2598,16 +2601,15 @@ def build_sydney(origin: Vec3, collection: Optional[bpy.types.Collection] = None
     # Concert Hall (larger, west-ish / left when looking from stairs = -X slightly, actually looking north the concert hall is to the right / east)
     # From the south stairs, the larger concert hall is on the right (east) and the opera theatre on the left (west).
     concert_sizes = [
-        (18.0, 0.85, 0.55, 1.15),
-        (16.0, 0.78, 0.50, 1.05),
-        (13.5, 0.68, 0.44, 0.92),
-        (10.0, 0.52, 0.36, 0.72),
+        (19.5, 0.88, 0.58, 1.18),
+        (15.5, 0.80, 0.50, 1.06),
+        (12.0, 0.70, 0.44, 0.94),
+        (8.8, 0.54, 0.36, 0.74),
     ]
     opera_sizes = [
-        (15.5, 0.80, 0.50, 1.05),
-        (13.5, 0.72, 0.44, 0.92),
-        (11.0, 0.60, 0.38, 0.78),
-        (8.0, 0.46, 0.32, 0.60),
+        (16.2, 0.82, 0.52, 1.08),
+        (13.0, 0.74, 0.46, 0.94),
+        (9.6, 0.60, 0.38, 0.78),
     ]
     rest_sizes = [
         (9.0, 0.62, 0.40, 0.72),
@@ -2683,8 +2685,9 @@ def build_museum_ground(collection: bpy.types.Collection) -> bpy.types.Object:
 
 def setup_global_lights(collection: bpy.types.Collection) -> None:
     if CFG.night:
-        add_sun("LF_Moon", (40.0, -80.0, 120.0), (math.radians(55.0), 0.0, math.radians(25.0)), 2.4, (0.72, 0.82, 1.0), collection)
-        add_sun("LF_WarmFill", (-60.0, 40.0, 80.0), (math.radians(40.0), 0.0, math.radians(-40.0)), 0.8, (1.0, 0.78, 0.55), collection)
+        add_sun("LF_Moon", (90.0, -70.0, 110.0), (math.radians(58.0), 0.0, math.radians(30.0)), 1.6, (0.78, 0.84, 1.0), collection)
+        add_sun("LF_WarmWash", (8.0, -78.0, 28.0), (math.radians(25.0), 0.0, math.radians(8.0)), 2.2, (1.0, 0.84, 0.62), collection)
+        add_sun("LF_SkyFill", (-40.0, 60.0, 50.0), (math.radians(70.0), 0.0, math.radians(-25.0)), 0.45, (0.55, 0.68, 0.9), collection)
     else:
         add_sun("LF_Sun", (80.0, -60.0, 140.0), (math.radians(48.0), 0.0, math.radians(35.0)), 4.5, (1.0, 0.96, 0.88), collection)
         add_sun("LF_SkyFill", (-40.0, 80.0, 60.0), (math.radians(70.0), 0.0, math.radians(-20.0)), 1.1, (0.65, 0.78, 1.0), collection)
