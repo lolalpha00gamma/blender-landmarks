@@ -17,7 +17,7 @@ What it builds (four independent collections, optionally laid out as a museum):
   3. MI6 / SIS         — Vauxhall Cross, Terry Farrell 1994 (ziggurat)
   4. Sydney Opera House — Utzon spherical shells on Bennelong Point
 
-Blender 4.0 – 5.x  |  Python 3.10+  |  Cycles or EEVEE  |  v1.2.0
+Blender 4.0 – 5.x  |  Python 3.10+  |  Cycles or EEVEE  |  v1.3.0
 
 N-Panel:  3D Viewport → Sidebar (N) → Landmark Forge
 """
@@ -44,7 +44,7 @@ except ImportError as exc:  # pragma: no cover
 # 0. VERSION / CONFIG
 # =============================================================================
 
-SCRIPT_VERSION = "1.2.0"
+SCRIPT_VERSION = "1.3.0"
 BLENDER_MIN = (4, 0, 0)
 
 Vec3 = Tuple[float, float, float]
@@ -1883,6 +1883,8 @@ def _hog_clock_tower(
     make_cylinder("LF_Hog_Clock_belt", r + 0.25, 1.1, (ox, oy, oz + 22.0), 28, collection, parent, m.hog_stone_dark)
     make_cylinder("LF_Hog_Clock_topdrum", r + 0.4, 4.5, (ox, oy, oz + h - 1.5), 28, collection, parent, m.hog_stone_dark)
     battlement_ring("LF_Hog_Clock_cren", ox, oy, oz + h + 0.9, r + 0.15, 18, collection, parent, m.hog_stone_dark, (0.5, 0.5, 0.85))
+    make_cone("LF_Hog_Clock_roof", r + 1.4, 22.0, (ox, oy, oz + h + 11.5), 24, 0.05, collection, parent, m.hog_slate)
+    make_cylinder("LF_Hog_Clock_finial", 0.08, 2.4, (ox, oy, oz + h + 24.0), 6, collection, parent, m.iron)
     # clock faces
     for i, a in enumerate((0.0, math.pi * 0.5, math.pi, math.pi * 1.5)):
         fx = ox + math.cos(a) * (r + 0.12)
@@ -2151,8 +2153,8 @@ def build_hogwarts(origin: Vec3, collection: Optional[bpy.types.Collection] = No
         lamp_post(f"LF_Hog_Lamp_{i}", (ox - 8.5, oy - 60.0 + i * 8.0, oz + 7.4), col, root, height=3.6)
     add_camera(
         "LF_Hog_Cam",
-        (origin[0] + 18.0, origin[1] - 82.0, origin[2] + 22.0),
-        (origin[0] + 4.0, origin[1] + 8.0, origin[2] + 28.0),
+        (origin[0] + 10.0, origin[1] - 78.0, origin[2] + 10.0),
+        (origin[0] - 6.0, origin[1] + 8.0, origin[2] + 28.0),
         col,
         lens=34.0,
     )

@@ -7,11 +7,11 @@ Massives Blender-4.x/5.x-Python-Skript, das vier ikonische Bauwerke als **prozed
 3. **MI6 / SIS Building** — Vauxhall Cross, Terry Farrell 1994
 4. **Sydney Opera House** — Jørn Utzons sphärische Schalen auf Bennelong Point
 
-Das gesamte Generator-Skript steckt in **einer Datei**: [`landmark_forge.py`](./landmark_forge.py) (v1.2.0, keine Extra-Addons).
+Das gesamte Generator-Skript steckt in **einer Datei**: [`landmark_forge.py`](./landmark_forge.py) (v1.3.0, keine Extra-Addons).
 
 Repository: [github.com/lolalpha00gamma/blender-landmarks](https://github.com/lolalpha00gamma/blender-landmarks)
 
-**v1.2.0** — höhere Türme, längerer Viadukt, ETH-Kuppel als Hof-Ikone, MI6-Glas an den Seiten, Opern-Schalen, warmes Nachtlicht. In Blender den Text-Block **ersetzen** (altes Fenster schließen, Datei neu öffnen).
+**v1.3.0** — Hogwarts See-Silhouette (Große Halle links, runder Uhrturm mit hohem Kegel, Nadeltürme rechts, Kapelle am Wasser). In Blender den Text-Block **ersetzen** (altes Fenster schließen, Datei neu öffnen).
 
 ---
 
